@@ -1,15 +1,37 @@
-import ormar
-from db import BaseMeta
+from typing import Optional
+
+from pydantic import BaseModel
+from fastapi_users import models
+from fastapi_users.db import TortoiseBaseUserModel
+from tortoise.contrib.pydantic import PydanticModel
+from tortoise import fields
 
 
-class User(ormar.Model):
-    class Meta(BaseMeta):
-        pass
+class User(models.BaseUser):
+    username: str
+    avatar: Optional[str]
 
-    id: int = ormar.Integer(primary_key=True)
-    username: str = ormar.String(max_length=100, unique=True)
-    phone: str = ormar.String(max_length=14, unique=True, nullable=True)
-    email: str = ormar.String(index=True, unique=True, nullable=False, max_length=255)
-    avatar: str = ormar.String(max_length=500, nullable=True)
-    is_active: bool = ormar.Boolean(default=True, nullable=False)
-    is_superuser: bool = ormar.Boolean(default=False, nullable=False)
+
+class UserCreate(models.BaseUserCreate):
+    username: str
+    avatar: Optional[str]
+
+
+class UserUpdate(models.BaseUserUpdate):
+    username: Optional[str]
+    avatar: Optional[str]
+
+
+class UserModel(TortoiseBaseUserModel):
+    username = fields.CharField(max_length=50, unique=True)
+    avatar = fields.CharField(max_length=200)
+
+
+class UserDB(User, models.BaseUserDB, PydanticModel):
+    class Config:
+        orm_mode = True
+        orig_model = UserModel
+
+
+class Status(BaseModel):
+    message: str
