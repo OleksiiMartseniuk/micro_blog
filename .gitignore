@@ -1,4 +1,6 @@
 .idea
 venv
 blog.db
+blog.db-shm
+blog.db-wal
 .env
