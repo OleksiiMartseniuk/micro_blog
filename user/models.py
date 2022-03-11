@@ -6,6 +6,8 @@ from fastapi_users.db import TortoiseBaseUserModel
 from tortoise.contrib.pydantic import PydanticModel
 from tortoise import fields
 
+from blog.models import Post
+
 
 class User(models.BaseUser):
     username: str
@@ -25,6 +27,7 @@ class UserUpdate(models.BaseUserUpdate):
 class UserModel(TortoiseBaseUserModel):
     username = fields.CharField(max_length=50, unique=True)
     avatar = fields.CharField(max_length=200)
+    posts: fields.ForeignKeyRelation[Post]
 
 
 class UserDB(User, models.BaseUserDB, PydanticModel):
