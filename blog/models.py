@@ -1,5 +1,4 @@
 from tortoise import fields, models
-from tortoise.contrib.pydantic import pydantic_model_creator
 
 
 class Comment(models.Model):
@@ -21,18 +20,6 @@ class Post(models.Model):
     body = fields.TextField()
     publish = fields.DatetimeField(auto_now_add=True)
     # draft | published
-    status = fields.CharField(max_length=9)
-    tags = fields.ManyToManyField('models.Tag', related_name='posts')
+    status = fields.CharField(max_length=9, default='published')
     comments: fields.ForeignKeyRelation[Comment]
 
-
-class Tag(models.Model):
-    """Model Tag"""
-    id = fields.IntField(pk=True)
-    name = fields.CharField(max_length=20)
-    posts: fields.ManyToManyRelation[Post]
-
-
-Tag_Pydantic = pydantic_model_creator(Tag, name="Tag")
-Post_Pydantic = pydantic_model_creator(Post, name="Post")
-Comment_Pydantic = pydantic_model_creator(Comment, name="Comment")
