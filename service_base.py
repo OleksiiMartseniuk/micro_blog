@@ -5,10 +5,10 @@ from pydantic import BaseModel
 from tortoise import models
 
 
-ModelType = TypeVar("ModelType", bound=models.Model)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
-GetSchemaType = TypeVar("GetSchemaType", bound=BaseModel)
+ModelType = TypeVar('ModelType', bound=models.Model)
+CreateSchemaType = TypeVar('CreateSchemaType', bound=BaseModel)
+UpdateSchemaType = TypeVar('UpdateSchemaType', bound=BaseModel)
+GetSchemaType = TypeVar('GetSchemaType', bound=BaseModel)
 
 
 class BaseService:
