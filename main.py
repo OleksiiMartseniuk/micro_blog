@@ -1,18 +1,11 @@
 from fastapi import FastAPI
 from tortoise.contrib.fastapi import register_tortoise
 
-from blog.routers import blog_router
-
-from user.settings import auth_backend, fastapi_users
+from routers import blog_router
 
 
 app = FastAPI()
 
-app.include_router(fastapi_users.get_auth_router(auth_backend), prefix="/auth/jwt", tags=["auth"])
-app.include_router(fastapi_users.get_register_router(), prefix="/auth", tags=["auth"])
-# app.include_router(fastapi_users.get_reset_password_router(), prefix="/auth", tags=["auth"])
-# app.include_router(fastapi_users.get_verify_router(), prefix="/auth", tags=["auth"])
-app.include_router(fastapi_users.get_users_router(), prefix="/users", tags=["users"])
 
 app.include_router(blog_router)
 
