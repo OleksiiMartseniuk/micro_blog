@@ -9,4 +9,12 @@ class PostService(BaseService):
     get_schema = schemas.GetPost
 
 
+class CommentService(BaseService):
+    model = models.Comment
+    create_schema = schemas.CreatePost
+    update_schema = schemas.GetComment
+    get_schema = schemas.GetComment
+
+
 post_s = PostService()
+comment_s = CommentService()

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from blog.endpoint import post
+from blog.endpoint import post, comment
 from user.settings import auth_backend, fastapi_users
 
 
@@ -14,3 +14,4 @@ blog_router.include_router(fastapi_users.get_register_router(), prefix="/auth", 
 blog_router.include_router(fastapi_users.get_users_router(), prefix="/users", tags=["users"])
 
 blog_router.include_router(post.post_router, prefix="/post", tags=["post"])
+blog_router.include_router(comment.comment_router, prefix="/comment", tags=["comment"])
