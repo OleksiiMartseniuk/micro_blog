@@ -6,7 +6,7 @@ class Comment(models.Model):
     id = fields.IntField(pk=True)
     post = fields.ForeignKeyField('models.Post', related_name='comments')
     name = fields.CharField(max_length=50)
-    email = fields.CharField(max_length=10)
+    email = fields.CharField(max_length=255)
     body = fields.CharField(max_length=250)
     create = fields.DatetimeField(auto_now_add=True)
     active = fields.BooleanField(default=True)
