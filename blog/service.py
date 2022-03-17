@@ -11,6 +11,10 @@ class PostService(BaseService):
     update_schema = schemas.GetPost
     get_schema = schemas.GetPost
 
+    async def create(self, **kwargs):
+        obj = await self.model.create(**kwargs)
+        return await self.get_schema.from_tortoise_orm(obj)
+
 
 class CommentService(BaseService):
     model = models.Comment
