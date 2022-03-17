@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import (Depends,
                      APIRouter,
                      UploadFile,
@@ -16,9 +18,14 @@ from typing import Optional
 post_router = APIRouter()
 
 
-@post_router.get('/{pk}', response_model=schemas.GetPost)
+@post_router.get('/{pk}', response_model=schemas.GetPost, responses={404: {"model": HTTPNotFoundError}})
 async def get_post(pk: int):
     return await service.post_s.get(id=pk)
+
+
+@post_router.get('', response_model=List[schemas.GetPost])
+async def list_post():
+    return await service.post_s.list()
 
 
 # add  tag
@@ -28,6 +35,7 @@ async def create_post(
         title: str = Form(...),
         body: str = Form(...),
         file: Optional[UploadFile] = File(None),
+        tag: str = Form(...),
         user: User = Depends(get_user)
         ):
     if not file:
@@ -35,7 +43,7 @@ async def create_post(
                                            body=body,
                                            author_id=user.id)
     else:
-        file_name = f'media/{user.id}/{file.filename}'
+        file_name = f'media/{file.filename}'
         if file.content_type == 'image/jpeg':
             background_tasks.add_task(service.write_image, file_name, file)
             return await service.post_s.create(title=title,
