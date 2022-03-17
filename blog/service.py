@@ -23,8 +23,15 @@ class CommentService(BaseService):
     get_schema = schemas.GetComment
 
 
+class TagService(BaseService):
+    model = models.Tag
+    create_schema = schemas.CreateTag
+    get_schema = schemas.GetTag
+
+
 post_s = PostService()
 comment_s = CommentService()
+tag_s = TagService()
 
 
 def write_image(file_name: str, file: UploadFile):
