@@ -1,25 +1,30 @@
 from tortoise import fields, models
 
+from user.models import User
 
-class Comment(models.Model):
-    """Model Comment"""
-    id = fields.IntField(pk=True)
-    post = fields.ForeignKeyField('models.Post', related_name='comments')
-    name = fields.CharField(max_length=50)
-    email = fields.CharField(max_length=255)
-    body = fields.CharField(max_length=250)
-    create = fields.DatetimeField(auto_now_add=True)
-    active = fields.BooleanField(default=True)
+
+class Tag(models.Model):
+    """Model Tag"""
+    name = fields.CharField(max_length=30)
 
 
 class Post(models.Model):
     """Model Post"""
-    id = fields.IntField(pk=True)
     title = fields.CharField(max_length=200)
-    author = fields.ForeignKeyField('models.UserModel', related_name='posts')
+    author = fields.ForeignKeyField('models.User', related_name='post')
     body = fields.TextField()
+    image = fields.CharField(max_length=500, null=True)
     publish = fields.DatetimeField(auto_now_add=True)
     # draft | published
     status = fields.CharField(max_length=9, default='published')
-    comments: fields.ForeignKeyRelation[Comment]
+    tag = fields.ManyToManyField('models.Tag')
 
+
+class Comment(models.Model):
+    """Model Comment"""
+    # post: Optional[Post] = ormar.ForeignKey(Post)
+    name = fields.CharField(max_length=200)
+    email = fields.CharField(max_length=50)
+    body = fields.CharField(max_length=255)
+    create = fields.DatetimeField(auto_now_add=True)
+    active = fields.BooleanField(default=True)
