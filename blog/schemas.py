@@ -27,5 +27,9 @@ class CreateComment(BaseModel):
     body: str
 
 
+class CreateTag(BaseModel):
+    name: str
+
+
 class Status(BaseModel):
     message: str
