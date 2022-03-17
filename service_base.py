@@ -24,7 +24,7 @@ class BaseService:
         obj = await self.model.create(**schema.dict(exclude_unset=True), **kwargs)
         return await self.get_schema.from_tortoise_orm(obj)
 
-    async def update(self, schema, **kwargs):
+    async def update(self, schema, **kwargs) -> Optional[UpdateSchemaType]:
         await self.model.filter(**kwargs).update(**schema.dict(exclude_unset=True))
         return await self.get_schema.from_queryset_single(self.model.get(**kwargs))
 
@@ -32,3 +32,6 @@ class BaseService:
         obj = await self.model.filter(**kwargs).delete()
         if not obj:
             raise HTTPException(status_code=404, detail=f"Object not found")
+
+    async def list(self) -> Optional[GetSchemaType]:
+        return await self.get_schema.from_queryset(self.model.all())
