@@ -17,6 +17,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     """Model Comment"""
+    post = fields.ForeignKeyField('models.Post', related_name='comment_post')
     name = fields.CharField(max_length=200)
     email = fields.CharField(max_length=50)
     body = fields.CharField(max_length=255)
