@@ -9,3 +9,5 @@ class User(models.Model):
     is_active = fields.BooleanField(default=True)
     is_superuser = fields.BooleanField(default=False)
 
+    def __str__(self):
+        return self.username

@@ -14,6 +14,9 @@ class Post(models.Model):
         'models.Tag', related_name='posts', through='post_tag'
     )
 
+    def __str__(self):
+        return self.title
+
 
 class Comment(models.Model):
     """Model Comment"""
@@ -24,8 +27,14 @@ class Comment(models.Model):
     create = fields.DatetimeField(auto_now_add=True)
     active = fields.BooleanField(default=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Tag(models.Model):
     """Model Tag"""
     name = fields.CharField(max_length=30, unique=True)
     posts: fields.ManyToManyRelation[Post]
+
+    def __str__(self):
+        return self.name
