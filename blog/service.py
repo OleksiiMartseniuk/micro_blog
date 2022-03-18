@@ -19,7 +19,6 @@ class PostService(BaseService):
 class CommentService(BaseService):
     model = models.Comment
     create_schema = schemas.CreatePost
-    update_schema = schemas.GetComment
     get_schema = schemas.GetComment
 
 
