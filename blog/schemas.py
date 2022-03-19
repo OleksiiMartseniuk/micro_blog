@@ -18,6 +18,7 @@ class CreatePost(BaseModel):
 class UpdatePost(BaseModel):
     title: Optional[str] = None
     body: Optional[str] = None
+    image: Optional[str] = None
 
 
 class CreateComment(BaseModel):
