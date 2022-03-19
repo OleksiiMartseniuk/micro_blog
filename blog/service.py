@@ -8,18 +8,20 @@ from blog import models, schemas
 
 class PostService(BaseService):
     model = models.Post
-    create_schema = schemas.CreatePost
-    update_schema = schemas.GetPost
+    update_schema = schemas.UpdatePost
     get_schema = schemas.GetPost
 
     async def create(self, **kwargs) -> models.Post:
         obj = await self.model.create(**kwargs)
         return obj
 
+    async def update(self, schema, **kwargs) -> None:
+        await self.model.filter(**kwargs).update(**schema.dict(exclude_unset=True))
+
 
 class CommentService(BaseService):
     model = models.Comment
-    create_schema = schemas.CreatePost
+    create_schema = schemas.CreateComment
     get_schema = schemas.GetComment
 
 
@@ -42,3 +44,7 @@ def write_image(file_name: str, file: UploadFile) -> None:
 
 async def get_tag(pk_list: list) -> List[models.Tag]:
     return await models.Tag.filter(id__in=pk_list)
+
+
+async def get_post(**kwargs) -> models.Post:
+    return await models.Post.get(**kwargs)
