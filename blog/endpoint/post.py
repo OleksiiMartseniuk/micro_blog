@@ -89,3 +89,8 @@ async def update_post(
 @post_router.delete('/{pk}', responses={404: {"model": HTTPNotFoundError}})
 async def delete_item(pk: int, user: User = Depends(get_user)):
     return await service.post_s.delete(author_id=user.id, id=pk)
+
+
+@post_router.get('/tags/{pk}', response_model=List[schemas.GetTag], responses={404: {"model": HTTPNotFoundError}})
+async def get_tags_post(pk: int):
+    return await service.post_s.get_tags_post(id=pk)
