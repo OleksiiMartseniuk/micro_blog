@@ -56,12 +56,36 @@ async def create_post(
     return await schemas.GetPost.from_tortoise_orm(obj)
 
 
-# add  update
-@post_router.put("/{pk}", responses={404: {"model": HTTPNotFoundError}})
-async def update_post(pk: int, post: schemas.UpdatePost, user: User = Depends(get_user)):
-    return await service.post_s.update(post, author_id=user.id, id=pk)
+@post_router.put('', response_model=schemas.UpdatePost, responses={404: {"model": HTTPNotFoundError}})
+async def update_post(
+        background_tasks: BackgroundTasks,
+        pk: int = Form(...),
+        title: Optional[str] = Form(None),
+        body: Optional[str] = Form(None),
+        file: Optional[UploadFile] = File(None),
+        tag: Optional[List[int]] = Form(None),
+        user: User = Depends(get_user)
+):
+    if not file:
+        post = schemas.UpdatePost(title=title, body=body)
+        await service.post_s.update(post, id=pk, author_id=user.id)
+    else:
+        file_name = f'media/{file.filename}'
+        if file.content_type == 'image/jpeg':
+            background_tasks.add_task(service.write_image, file_name, file)
+            post = schemas.UpdatePost(title=title, body=body, image=file_name)
+            await service.post_s.update(post, id=pk, author_id=user.id)
+        else:
+            raise HTTPException(status_code=418, detail="It isn't image")
+    if tag:
+        obj = await service.get_post(id=pk, author_id=user.id)
+        tag_db = await service.get_tag(tag)
+        tag_del = await obj.tag
+        await obj.tag.remove(*tag_del)
+        await obj.tag.add(*tag_db)
+    return post
 
 
-@post_router.delete("/{pk}", responses={404: {"model": HTTPNotFoundError}})
+@post_router.delete('/{pk}', responses={404: {"model": HTTPNotFoundError}})
 async def delete_item(pk: int, user: User = Depends(get_user)):
     return await service.post_s.delete(author_id=user.id, id=pk)
