@@ -43,8 +43,10 @@ def write_image(file_name: str, file: UploadFile) -> None:
 
 
 async def get_tag(pk_list: list) -> List[models.Tag]:
+    # get tag
     return await models.Tag.filter(id__in=pk_list)
 
 
 async def get_post(**kwargs) -> models.Post:
+    # get post
     return await models.Post.get(**kwargs)
