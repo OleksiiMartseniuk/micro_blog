@@ -18,6 +18,10 @@ class PostService(BaseService):
     async def update(self, schema, **kwargs) -> None:
         await self.model.filter(**kwargs).update(**schema.dict(exclude_unset=True))
 
+    async def get_tags_post(self, **kwargs) -> List[schemas.GetTag]:
+        post = await self.model.get(**kwargs)
+        return await post.tag
+
 
 class CommentService(BaseService):
     model = models.Comment
