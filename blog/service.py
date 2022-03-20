@@ -41,16 +41,16 @@ tag_s = TagService()
 
 
 def write_image(file_name: str, file: UploadFile) -> None:
-    # write image
+    """ Write image """
     with open(file_name, 'wb') as buffer:
         shutil.copyfileobj(file.file, buffer)
 
 
 async def get_tag(pk_list: list) -> List[models.Tag]:
-    # get tag
+    """ Get tag"""
     return await models.Tag.filter(id__in=pk_list)
 
 
 async def get_post(**kwargs) -> models.Post:
-    # get post
+    """ Get post """
     return await models.Post.get(**kwargs)
