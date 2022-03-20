@@ -4,10 +4,10 @@ from fastapi import HTTPException, Security
 from fastapi.security import OAuth2PasswordBearer
 from starlette.status import HTTP_403_FORBIDDEN
 
-from user.models import User
+from src.user.models import User
 
-from user.tokenizator import ALGORITHM, SECRET_KEY
-from user.schemas import TokenPayload
+from src.user.tokenizator import ALGORITHM, SECRET_KEY
+from src.user.schemas import TokenPayload
 
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="/api/v1/login/access-token")

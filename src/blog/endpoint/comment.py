@@ -1,8 +1,7 @@
 from fastapi import APIRouter
 from tortoise.contrib.fastapi import HTTPNotFoundError
 
-from blog import schemas, service
-
+from src.blog import schemas, service
 
 comment_router = APIRouter()
 

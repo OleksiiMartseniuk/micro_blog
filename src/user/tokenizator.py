@@ -1,9 +1,9 @@
 import jwt
 from datetime import datetime, timedelta
-from settings import (ALGORITHM,
-                      ACCESS_TOKEN_EXPIRE_MINUTES,
-                      access_token_jwt_subject,
-                      SECRET_KEY)
+from src.config.settings import (ALGORITHM,
+                                 ACCESS_TOKEN_EXPIRE_MINUTES,
+                                 access_token_jwt_subject,
+                                 SECRET_KEY)
 
 
 def create_token(user_id: int) -> dict:

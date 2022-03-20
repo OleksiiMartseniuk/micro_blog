@@ -3,8 +3,9 @@ from starlette.templating import Jinja2Templates
 
 from tortoise.contrib.fastapi import HTTPNotFoundError
 
-from user import schemas, services, models
-from user.auth import get_user
+from src.user import schemas
+from src.user import services, models
+from src.user.auth import get_user
 
 
 templates = Jinja2Templates(directory='templates')

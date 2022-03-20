@@ -3,9 +3,10 @@ from fastapi import HTTPException
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
-from service_base import BaseService
-from user import schemas, models, tokenizator
-from settings import GOOGLE_CLIENT_ID
+from src.service_base import BaseService
+from src.user import schemas, tokenizator
+from src.user import models
+from src.config.settings import GOOGLE_CLIENT_ID
 
 
 class UserService(BaseService):

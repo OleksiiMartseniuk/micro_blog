@@ -8,9 +8,9 @@ from fastapi import (Depends,
                      BackgroundTasks,
                      HTTPException)
 
-from user.auth import get_user
-from user.models import User
-from blog import schemas, service
+from src.user.auth import get_user
+from src.user.models import User
+from src.blog import schemas, service
 from tortoise.contrib.fastapi import HTTPNotFoundError
 
 

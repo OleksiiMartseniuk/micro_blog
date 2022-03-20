@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from blog import models
+from src.blog import models
 from tortoise.contrib.pydantic import pydantic_model_creator
 from typing import Optional
 

@@ -4,9 +4,9 @@ from typing import List
 
 from tortoise.contrib.fastapi import HTTPNotFoundError
 
-from blog import schemas, service
-from user.models import User
-from user.auth import get_user
+from src.blog import schemas, service
+from src.user.models import User
+from src.user.auth import get_user
 
 
 tag_router = APIRouter()

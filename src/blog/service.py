@@ -2,8 +2,8 @@ import shutil
 from typing import List
 from fastapi import UploadFile
 
-from service_base import BaseService
-from blog import models, schemas
+from src.service_base import BaseService
+from src.blog import schemas, models
 
 
 class PostService(BaseService):

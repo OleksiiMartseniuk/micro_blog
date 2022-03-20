@@ -1,5 +1,5 @@
 from pydantic import EmailStr, BaseModel
-from user import models
+from src.user import models
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 

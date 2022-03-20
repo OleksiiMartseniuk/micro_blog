@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from blog.endpoint import post, comment, tag
-from user import api
+from src.blog.endpoint import post, comment, tag
+from src.user import api
 
 blog_router = APIRouter()
 
