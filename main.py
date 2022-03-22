@@ -5,7 +5,9 @@ from src.routers import blog_router
 from src.config import settings
 
 app = FastAPI()
-
+# add testing
+# add docker
+# add README
 
 app.include_router(blog_router)
 

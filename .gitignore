@@ -5,3 +5,4 @@ blog.db-shm
 blog.db-wal
 .env
 media
+.pytest_cache
