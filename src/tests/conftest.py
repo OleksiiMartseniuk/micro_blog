@@ -3,6 +3,7 @@ import asyncio
 import pytest
 from tortoise import Tortoise
 from src.config import settings
+from src.user.models import User
 
 DB_URL = "sqlite://:memory:"
 
@@ -17,6 +18,7 @@ async def init_db(db_url, create_db: bool = False, schemas: bool = False) -> Non
     if schemas:
         await Tortoise.generate_schemas()
         print("Success to generate schemas")
+    await User.create(username='test', email='user@example.com', avatar='path/test')
 
 
 async def init(db_url: str = DB_URL):
