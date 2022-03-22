@@ -12,5 +12,5 @@ async def create_comment(comment: schemas.CreateComment):
 
 
 @comment_router.delete('/{pk}', response_model=schemas.Status, responses={404: {"model": HTTPNotFoundError}})
-async def delete_comment(pk: int):
-    return await service.comment_s.delete(id=pk)
+async def delete_comment(pk: int, email: str):
+    return await service.comment_s.delete(email=email, id=pk)
