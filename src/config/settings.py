@@ -15,3 +15,5 @@ APPS_MODELS = [
     "src.user.models",
     "aerich.models"
 ]
+
+DATABASE_URI = 'sqlite://blog.db'
