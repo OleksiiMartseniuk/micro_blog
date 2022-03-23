@@ -4,7 +4,7 @@ from main import app
 
 from src.user.models import User
 from src.user import tokenizator
-from src.blog.models import Post, Comment
+from src.blog.models import Post, Comment, Tag
 
 
 async def get_user_token() -> str:
@@ -78,3 +78,29 @@ async def test_comment_delete():
         response = await ac.delete("/comment/1?email=user@example.com")
     assert response.status_code == 200
     assert await Comment.all().count() == 0
+
+
+@pytest.mark.asyncio
+async def test_tag_create():
+    user_token = await get_user_token()
+    assert await Tag.all().count() == 0
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.post("/tag",
+                                 json={'name': 'test_tag'},
+                                 headers={"Authorization": f"Bearer {user_token}"})
+    assert response.status_code == 200
+    assert await Tag.all().count() == 1
+    assert response.json() == {'id': 1, 'name': 'test_tag'}
+
+
+@pytest.mark.asyncio
+async def test_tag_get():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.get("/tag/1")
+    assert response.json() == {'id': 1, 'name': 'test_tag'}
+
+
+async def test_tag_list():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.get("/tag")
+    assert response.json() == [{'id': 1, 'name': 'test_tag'}]
