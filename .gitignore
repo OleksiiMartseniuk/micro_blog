@@ -6,3 +6,4 @@ blog.db-wal
 .env
 media
 .pytest_cache
+.coverage
