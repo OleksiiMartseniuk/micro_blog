@@ -81,7 +81,8 @@ async def update_post(
         obj = await service.get_post(id=pk, author_id=user.id)
         tag_db = await service.get_tag(tag)
         tag_del = await obj.tag
-        await obj.tag.remove(*tag_del)
+        if await obj.tag.all().count() >= 1:
+            await obj.tag.remove(*tag_del)
         await obj.tag.add(*tag_db)
     return post
 
